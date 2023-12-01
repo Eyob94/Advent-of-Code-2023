@@ -4,45 +4,12 @@ fn main() {
     println!("{result}");
 }
 
-struct StrToNum {
-    str: &'static str,
-    num: u32,
-}
+type StrToNumTuple = (&'static str, u32);
 
 fn part2(input: &str) -> u32 {
-    let three_letter_digits: [StrToNum; 3] = [
-        StrToNum { str: "one", num: 1 },
-        StrToNum { str: "two", num: 2 },
-        StrToNum { str: "six", num: 6 },
-    ];
-    let four_letter_digits: [StrToNum; 3] = [
-        StrToNum {
-            str: "four",
-            num: 4,
-        },
-        StrToNum {
-            str: "five",
-            num: 5,
-        },
-        StrToNum {
-            str: "nine",
-            num: 9,
-        },
-    ];
-    let five_letter_digits: [StrToNum; 3] = [
-        StrToNum {
-            str: "three",
-            num: 3,
-        },
-        StrToNum {
-            str: "seven",
-            num: 7,
-        },
-        StrToNum {
-            str: "eight",
-            num: 8,
-        },
-    ];
+    let three_letter_digits: [StrToNumTuple; 3] = [("one", 1), ("two", 2), ("six", 6)];
+    let four_letter_digits: [StrToNumTuple; 3] = [("four", 4), ("five", 5), ("nine", 9)];
+    let five_letter_digits: [StrToNumTuple; 3] = [("three", 3), ("seven", 7), ("eight", 8)];
     let mut calibration_numbers: Vec<u32> = Vec::with_capacity(input.len());
     for line in input.lines() {
         let mut nums: Vec<u32> = Vec::new();
@@ -56,14 +23,13 @@ fn part2(input: &str) -> u32 {
             } else if i + 2 < line.len()
                 && three_letter_digits
                     .iter()
-                    .any(|str_to_num| str_to_num.str == &line[i..=i + 2])
+                    .any(|str_to_num| str_to_num.0 == &line[i..=i + 2])
             {
                 let num = match three_letter_digits
                     .iter()
-                    .find(|str_to_num| str_to_num.str == &line[i..=i + 2])
-                    .map(|str_to_num| str_to_num.num)
+                    .find(|str_to_num| str_to_num.0 == &line[i..=i + 2])
                 {
-                    Some(n) => n,
+                    Some(n) => n.1,
                     None => continue,
                 };
 
@@ -71,14 +37,13 @@ fn part2(input: &str) -> u32 {
             } else if i + 3 < line.len()
                 && four_letter_digits
                     .iter()
-                    .any(|str_to_num| str_to_num.str == &line[i..=i + 3])
+                    .any(|str_to_num| str_to_num.0 == &line[i..=i + 3])
             {
                 let num = match four_letter_digits
                     .iter()
-                    .find(|str_to_num| str_to_num.str == &line[i..=i + 3])
-                    .map(|str_to_num| str_to_num.num)
+                    .find(|str_to_num| str_to_num.0 == &line[i..=i + 3])
                 {
-                    Some(n) => n,
+                    Some(n) => n.1,
                     None => continue,
                 };
 
@@ -86,14 +51,13 @@ fn part2(input: &str) -> u32 {
             } else if i + 4 < line.len()
                 && five_letter_digits
                     .iter()
-                    .any(|str_to_num| str_to_num.str == &line[i..=i + 4])
+                    .any(|str_to_num| str_to_num.0 == &line[i..=i + 4])
             {
                 let num = match five_letter_digits
                     .iter()
-                    .find(|str_to_num| str_to_num.str == &line[i..=i + 4])
-                    .map(|str_to_num| str_to_num.num)
+                    .find(|str_to_num| str_to_num.0 == &line[i..=i + 4])
                 {
-                    Some(n) => n,
+                    Some(n) => n.1,
                     None => continue,
                 };
 
