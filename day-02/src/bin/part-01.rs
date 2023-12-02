@@ -5,7 +5,7 @@ use std::collections::HashSet;
 use stack::Stack;
 
 fn main() {
-    let text = include_str!("input1.txt");
+    let text = include_str!("input.txt");
     let result = part1(text);
 
     println!("{}", result)
