@@ -45,7 +45,7 @@ fn part1(games: &str) -> u32 {
             if let Some(index) = amount_available
                 .map(|colors| colors.0.to_string())
                 .iter()
-                .position(|x| x == &letter || x == &letter[0..letter.len() - 2])
+                .position(|x| x == &letter)
             {
                 if last_amount > amount_available[index].1 {
                     impossible_games.insert(this_game);

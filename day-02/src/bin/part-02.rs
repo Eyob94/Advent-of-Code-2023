@@ -1,11 +1,11 @@
 fn main() {
     let text = include_str!("input.txt");
-    let result = part1(text);
+    let result = part2(text);
 
     println!("{}", result)
 }
 
-fn part1(games: &str) -> u32 {
+fn part2(games: &str) -> u32 {
     let game: Vec<&str> = games.split(&[' ', '\n'][..]).collect();
     let colors = ["red", "green", "blue"];
     let mut powers: Vec<u32> = Vec::with_capacity(games.lines().count());
@@ -65,7 +65,7 @@ Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red
 Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red
 Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green";
 
-        let result = part1(test_data);
+        let result = part2(test_data);
 
         assert_eq!(result, 2286);
     }
