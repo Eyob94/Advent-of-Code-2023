@@ -1,4 +1,3 @@
-#![allow(unused_variables)]
 fn main() {
     let input_data = include_str!("./input.txt");
     let result = part1(input_data);
