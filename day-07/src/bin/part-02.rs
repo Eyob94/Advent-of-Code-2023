@@ -7,13 +7,12 @@ use std::{
 };
 fn main() {
     let input = include_str!("./input.txt");
-    let result = part1(input);
+    let result = part2(input);
 
     println!("{result}");
 }
 
-fn part1(input: &str) -> u32 {
-    let card_type = vec![("T", 10), ("J", 11), ("Q", 12), ("K", 13), ("A", 14)];
+fn part2(input: &str) -> u32 {
     let mut ranks: Vec<(u32, Vec<u8>, f32)> = Vec::with_capacity(input.lines().count());
 
     for (i, line) in input.lines().enumerate() {
@@ -32,7 +31,7 @@ fn part1(input: &str) -> u32 {
             } else {
                 let dig: u8 = match j {
                     'T' => 10_u8,
-                    'J' => 11_u8,
+                    'J' => 1_u8,
                     'Q' => 12_u8,
                     'K' => 13_u8,
                     'A' => 14_u8,
@@ -61,6 +60,28 @@ fn part1(input: &str) -> u32 {
                 rank -= 1.0;
             }
         }
+        if occurences.get(&1).is_some() {
+            let max = occurences.values().max().unwrap();
+            if occurences.get(&1).unwrap() != max || occurences.get(&1).unwrap() == &1 {
+                if max == &2 && unique_hand.len() == 3 {
+                    rank += 1.5;
+                } else {
+                    rank += *occurences.get(&1).unwrap() as f32;
+                }
+            } else {
+                if max == &5 {
+                    rank = rank;
+                } else if max == &3 {
+                    if unique_hand.len() == 2 {
+                        rank = 5.0;
+                    } else {
+                        rank = 4.0;
+                    }
+                } else {
+                    rank += (5_f32 - *max as f32).min(*max as f32);
+                }
+            }
+        }
 
         ranks.push((bid.parse::<u32>().unwrap_or(0), hand, rank));
     }
@@ -68,6 +89,7 @@ fn part1(input: &str) -> u32 {
     ranks.sort_by(|a, b| match a.2.total_cmp(&b.2) {
         Ordering::Equal => {
             let mut i = 0;
+
             loop {
                 if i >= a.1.len() {
                     break Ordering::Equal;
@@ -84,6 +106,7 @@ fn part1(input: &str) -> u32 {
         ordering => ordering,
     });
 
+
     ranks
         .iter()
         .enumerate()
@@ -97,9 +120,9 @@ mod test {
 
     #[test]
     fn testing() {
-        let input = include_str!("./test.txt");
-        let result = part1(input);
+        let input = include_str!("./test2.txt");
+        let result = part2(input);
 
-        assert_eq!(result, 6592)
+        assert_eq!(result, 5905)
     }
 }
